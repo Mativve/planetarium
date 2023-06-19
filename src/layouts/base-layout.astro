@@ -10,7 +10,7 @@ import Nav from '../components/Nav.astro';
     <title></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace&family=Geologica:wght@200;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace&family=Geologica:wght@200;400&display=swap" rel="stylesheet">
 </head>
 <body>
     <Nav/>
@@ -22,6 +22,85 @@ import Nav from '../components/Nav.astro';
 </body>
 </html>
 
-<style lang="sass" is:global>
+<style lang="scss" is:global>
+    :root{
+        --c_white: #FFFFFF;
+        --c_black: #000000;
 
+        --c_primary: #00bca2;
+        --c_secondary: #151c27;
+        --c_secondary-dark: #0f141b;
+
+        --font_main: 'Geologica', sans-serif;
+        --font_heading: 'Bruno Ace', cursive;
+
+        --step--1: clamp(0.83rem, calc(0.77rem + 0.30vw), 1.00rem);
+        --step-0: clamp(1.00rem, calc(0.91rem + 0.45vw), 1.25rem);
+        --step-1: clamp(1.20rem, calc(1.07rem + 0.66vw), 1.56rem);
+        --step-2: clamp(1.44rem, calc(1.25rem + 0.93vw), 1.95rem);
+        --step-3: clamp(1.73rem, calc(1.47rem + 1.30vw), 2.44rem);
+        --step-4: clamp(2.07rem, calc(1.72rem + 1.78vw), 3.05rem);
+        --step-5: clamp(2.49rem, calc(2.01rem + 2.41vw), 3.82rem);
+    }
+
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html, body{
+        height: 100%;
+    }
+
+    body{
+        font-size: var(--step-0);
+        font-family: var(--font_main);
+        font-weight: 300;
+        line-height: 1.4;
+        color: var(--c_white);
+        background-color: var(--c_secondary-dark);
+    }
+
+    h1, h2, h3, h4, h5, h6,
+    .h1, .h2, .h3, .h4, .h5, .h6{
+        font-family: var(--font_heading);
+        line-height: 1.6;
+    }
+
+    h1, .h1{ font-size: var(--step-5); }
+    h2, .h2{ font-size: var(--step-4); }
+    h3, .h3{ font-size: var(--step-3); }
+    h4, .h4{ font-size: var(--step-2); }
+    h5, .h5{ font-size: var(--step-1); }
+    h6, .h6, p{ font-size: var(--step-0); }
+    small, .text-small{ font-size: var(--step--1); }
+
+    .container{
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .btn{
+        text-decoration: none;
+        color: var(--c_white);
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: left;
+
+        &-nav{
+            font-family: var(--font_heading);
+            font-size: var(--step--1);
+            padding: 0.75rem;
+            opacity: 0.5;
+            transition: opacity 0.4s ease-in-out;
+
+            &:hover, &:focus{
+                color: var(--c_primary);
+                opacity: 1;
+            }
+        }
+    }
 </style>

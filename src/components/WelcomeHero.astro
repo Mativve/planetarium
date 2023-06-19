@@ -2,14 +2,101 @@
 
 ---
 
-<header class="header">
+<header class="welcome-hero">
     <div class="container">
-        <h1>planetarium</h1>
+        <h1 class="h2 welcome-hero-title">planetarium</h1>
     </div>
-
-    <button class="header-more">odkryj kosmos</button>
+    
+    <button class="welcome-hero-more"><span>odkryj kosmos</span></button>
 </header>
 
 <style lang="scss">
-    
+    .welcome-hero{
+        position: relative;
+
+        height: 100vh;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &-title{
+            letter-spacing: 2px;
+        }
+
+        &-more{
+            background-color: transparent;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+
+            font-family: var(--font_heading);
+            font-size: var(--step--1);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 164px;
+            font-size: var(--step--1);
+            color: var(--c_white);
+
+            span{
+                position: relative;
+                z-index: 1;
+                background-color: var(--c_secondary-dark);
+                padding: 0.5rem 0;
+                color: rgba(255, 255, 255, 0.5);
+                opacity: 0;
+
+                transition: opacity 0.4s ease-in-out;
+            }
+
+            &::after, &::before{
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 3px;
+                height: 80%;
+                background-color: var(--c_white);
+                opacity: 0.25;
+            }
+
+            &::before{
+                transform-origin: 50% 0%;
+                transform: translate(-50%, -50%) scaleY(0);
+
+                animation: flight 2s ease-in-out infinite forwards;
+            }
+
+            &:hover, &:focus{
+                span{
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    @keyframes flight{
+        0%{
+            transform-origin: 50% 0%;
+            transform: translate(-50%, -50%) scaleY(0);
+        }
+
+        30%{
+            transform-origin: 50% 0%;
+            transform: translate(-50%, -50%) scaleY(1);
+        }
+        
+        35%{
+            transform-origin: 50% 100%;
+            transform: translate(-50%, -50%) scaleY(1);
+        }
+
+        100%{
+            transform-origin: 50% 100%;
+            transform: translate(-50%, -50%) scaleY(0);
+        }
+    }
 </style>
