@@ -1,0 +1,40 @@
+---
+const { name, diameter_km, temperature, gravity_ms, composition, population, description, curiosity, rotation_speed_kmh, relative_rotation_axis } = Astro.props.data;
+---
+<article class="planet">
+    <div class="planet-sphere">
+
+    </div>
+    <div class="planet-info">
+        <h2 class="planet-name">{ name }</h2>
+        <div class="planet-status">
+            <div class="planet-diameter">{ diameter_km } km</div>
+            <div class="planet-gravity">{ gravity_ms } m/s<sup>2</sup></div>
+            <div class="planet-population">{ population }</div>
+            <div class="planet-rotation-speed">{ rotation_speed_kmh } km/h</div>
+            <div class="planet-rotation-axis">{ relative_rotation_axis } &deg;</div>
+        </div>
+        <div class="planet-temperature">
+            <div class="planet-scale">
+                { 
+                    Object.keys(temperature).map(k => {
+                        return <span class={k}>{temperature[k]} &deg;C</span>
+                    })
+                }
+            </div>
+        </div>
+        <div class="planet-composition">
+            {
+                composition.map(c => {
+                    return <span>{ c }</span>;
+                })
+            }
+        </div>
+        <div class="planet-description">{ description }</div>
+        <div class="planet-curiosity">{ curiosity }</div>
+    </div>
+</article>
+
+<style lang="sass">
+
+</style>

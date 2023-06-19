@@ -1,0 +1,10 @@
+---
+import planetsJSON from '../data/planets.json';
+import Planet from '../single/Planet.astro';
+---
+
+{
+    planetsJSON.map(e => {
+        return <Planet data={e}/>
+    })
+}

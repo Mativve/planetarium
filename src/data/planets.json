@@ -1,0 +1,130 @@
+[
+    {
+      "name": "mercury",
+      "diameter_km": 4879,
+      "temperature": {
+        "min": -183,
+        "avg": 167,
+        "max": 427
+      },
+      "gravity_ms": 3.7,
+      "composition": ["silicates", "metals"],
+      "population": 0,
+      "description": "Merkury jest najbliższą Słońcu planetą w naszym układzie słonecznym. Jego powierzchnia jest pokryta licznymi kratery, a atmosfera jest bardzo cienka. Ma największą różnicę temperatur na powierzchni spośród wszystkich planet.",
+      "curiosity": "Merkury jest najmniejszą planetą w układzie słonecznym i ma najdłuższy okres obiegu wokół Słońca spośród wszystkich planet.",
+      "rotation_speed_kmh": 10.9,
+      "relative_rotation_axis": 0.034
+    },
+    {
+      "name": "venus",
+      "diameter_km": 12104,
+      "temperature": {
+        "min": 462,
+        "avg": 464,
+        "max": 471
+      },
+      "gravity_ms": 8.87,
+      "composition": ["carbon dioxide", "nitrogen"],
+      "population": 0,
+      "description": "Wenus jest planetą o gęstej atmosferze, która powoduje efekt cieplarniany. Jest to najgorętsza planeta w naszym układzie słonecznym, choć nie jest najbliżej Słońca. Jej powierzchnia jest pokryta licznymi wulkanami i górami.",
+      "curiosity": "Wenus ma bardzo długie dni i noce, które trwają odpowiednio około 243 i 243 ziemskich dni.",
+      "rotation_speed_kmh": -6.5,
+      "relative_rotation_axis": 177.4
+    },
+    {
+      "name": "earth",
+      "diameter_km": 12742,
+      "temperature": {
+        "min": -89.2,
+        "avg": 14,
+        "max": 56.7
+      },
+      "gravity_ms": 9.81,
+      "composition": ["silicates", "water", "minerals"],
+      "population": 7900000000,
+      "description": "Ziemia jest naszą domową planetą i jedyną znaną nam planetą zamieszkałą przez różnorodne formy życia. Ma atmosferę, która umożliwia istnienie wody w stanie ciekłym i zapewnia odpowiednie warunki dla istnienia życia.",
+      "curiosity": "Ziemia jest jedyną planetą w układzie słonecznym, na której znaleziono wodę w stanie ciekłym w dużych ilościach.",
+      "rotation_speed_kmh": 1674.4,
+      "relative_rotation_axis": 0
+    },
+    {
+      "name": "mars",
+      "diameter_km": 6779,
+      "temperature": {
+        "min": -143,
+        "avg": -63,
+        "max": 35
+      },
+      "gravity_ms": 3.71,
+      "composition": ["silicates", "iron", "sulfur minerals"],
+      "population": 0,
+      "description": "Mars jest znaną jako \"Czerwona Planeta\" ze względu na jej charakterystyczną czerwoną powierzchnię. Ma on rzadką atmosferę, składającą się głównie z dwutlenku węgla. Na Marsie występują polarno-łuskowe czapy lodowe oraz systemy dolin i wąwozów.",
+      "curiosity": "Na Marsie znajduje się najwyższa wulkaniczna góra w naszym układzie słonecznym - Olympus Mons, który jest trzy razy wyższy od najwyższego szczytu na Ziemi, Mount Everest.",
+      "rotation_speed_kmh": 868.2,
+      "relative_rotation_axis": 25.2
+    },
+    {
+      "name": "jupiter",
+      "diameter_km": 139820,
+      "temperature": {
+        "min": -145,
+        "avg": -108,
+        "max": -8
+      },
+      "gravity_ms": 24.79,
+      "composition": ["hydrogen", "helium"],
+      "population": 0,
+      "description": "Jowisz to największa planeta w naszym układzie słonecznym. Jest gazowym olbrzymem o wyraźnym systemie pierścieni. Ma również wiele księżyców, w tym cztery największe, znane jako galileuszowe księżyce: Io, Europa, Ganimedes i Kallisto.",
+      "curiosity": "Jowisz ma potężną atmosferę z widocznymi pasami chmur, a najbardziej charakterystycznym elementem jest Wielka Czerwona Plama - ogromna burza atmosferyczna trwająca od co najmniej 300 lat.",
+      "rotation_speed_kmh": 12.6,
+      "relative_rotation_axis": 3.1
+    },
+    {
+      "name": "saturn",
+      "diameter_km": 116460,
+      "temperature": {
+        "min": -178,
+        "avg": -140,
+        "max": -88
+      },
+      "gravity_ms": 10.44,
+      "composition": ["hydrogen", "helium", "ice", "dust"],
+      "population": 0,
+      "description": "Saturn jest drugim co do wielkości gazowym olbrzymem w naszym układzie słonecznym. Posiada charakterystyczne pierścienie, składające się z lodu, skał i pyłu. Ma również wiele księżyców, w tym największego - Tytana.",
+      "curiosity": "Saturn ma niesamowicie widoczne pierścienie, które są złożone z setek tysięcy małych fragmentów lodu i skał.",
+      "rotation_speed_kmh": 10.6,
+      "relative_rotation_axis": 26.7
+    },
+    {
+      "name": "career",
+      "diameter_km": 50724,
+      "temperature": {
+        "min": -224,
+        "avg": -197,
+        "max": -153
+      },
+      "gravity_ms": 8.87,
+      "composition": ["hydrogen", "helium", "metals", "rocks"],
+      "population": 0,
+      "description": "Uran jest gazowym olbrzymem o niebiesko-zielonym kolorze. Ma nachyloną oś obrotu, co powoduje, że porusza się po orbicie na boku. Uran posiada także pierścienie i wiele księżyców.",
+      "curiosity": "Uran jest jedyną planetą w układzie słonecznym, która została nazwana na cześć postaci z mitologii greckiej, a nie rzymskiej.",
+      "rotation_speed_kmh": -17.2,
+      "relative_rotation_axis": 97.8
+    },
+    {
+      "name": "neptune",
+      "diameter_km": 49244,
+      "temperature": {
+        "min": -221,
+        "avg": -201,
+        "max": -183
+      },
+      "gravity_ms": 11.15,
+      "composition": ["hydrogen", "helium", "metals", "rocks"],
+      "population": 0,
+      "description": "Neptun jest gazowym olbrzymem, który jest znacznie dalej od Słońca niż Uran. Ma charakterystyczny niebieski kolor, spowodowany obecnością metanu w atmosferze. Neptun ma również pierścienie i wiele księżyców.",
+      "curiosity": "Na Neptunie występuje najpotężniejsza znana nam burza atmosferyczna, zwaną Młodą Ciemną Plamą, która pojawiła się w 2018 roku.",
+      "rotation_speed_kmh": 16.1,
+      "relative_rotation_axis": 28.3
+    }
+]
