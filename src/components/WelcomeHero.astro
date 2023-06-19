@@ -8,6 +8,8 @@
     </div>
     
     <button class="welcome-hero-more"><span>odkryj kosmos</span></button>
+
+    <div id="particles" class="particles"></div>
 </header>
 
 <style lang="scss">
@@ -19,6 +21,20 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
+        &::after{
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('./assets/img/tree2.png');
+            background-repeat: repeat-x;
+            background-size: 100% auto;
+            background-position: bottom center;
+            z-index: 2;
+        }
 
         &-title{
             letter-spacing: 2px;
@@ -39,6 +55,7 @@
             height: 164px;
             font-size: var(--step--1);
             color: var(--c_white);
+            z-index: 3;
 
             span{
                 position: relative;
@@ -75,6 +92,18 @@
                     opacity: 1;
                 }
             }
+        }
+
+        .particles{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.5;
+            box-shadow: inset 0 -50px 100px 100px var(--c_secondary-dark);
         }
     }
 

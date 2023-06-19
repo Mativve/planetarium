@@ -14,7 +14,9 @@
       "curiosity": "Merkury jest najmniejszą planetą w układzie słonecznym i ma najdłuższy okres obiegu wokół Słońca spośród wszystkich planet.",
       "rotation_speed_kmh": 10.9,
       "relative_rotation_axis": 0.034,
-      "textures": ["mercury.jpg"]
+      "textures": ["mercury.jpg"],
+      "color_avg": "#A4A4A4",
+      "atmoshpere_thickness": 0
     },
     {
       "name": "venus",
@@ -31,7 +33,9 @@
       "curiosity": "Wenus ma bardzo długie dni i noce, które trwają odpowiednio około 243 i 243 ziemskich dni.",
       "rotation_speed_kmh": -6.5,
       "relative_rotation_axis": 177.4,
-      "textures": ["venus_surface.jpg", "venus_atmosphere.jpg"]
+      "textures": ["venus_surface.jpg", "venus_atmosphere.jpg"],
+      "color_avg": "#FFD700",
+      "atmoshpere_thickness": 8
     },
     {
       "name": "earth",
@@ -48,7 +52,9 @@
       "curiosity": "Ziemia jest jedyną planetą w układzie słonecznym, na której znaleziono wodę w stanie ciekłym w dużych ilościach.",
       "rotation_speed_kmh": 1674.4,
       "relative_rotation_axis": 0,
-      "textures": ["earth_daymap.jpg", "earth_clouds.jpg"]
+      "textures": ["earth_day.jpg", "earth_night.jpg"],
+      "color_avg": "#0000FF",
+      "atmoshpere_thickness": 10
     },
     {
       "name": "mars",
@@ -65,7 +71,9 @@
       "curiosity": "Na Marsie znajduje się najwyższa wulkaniczna góra w naszym układzie słonecznym - Olympus Mons, który jest trzy razy wyższy od najwyższego szczytu na Ziemi, Mount Everest.",
       "rotation_speed_kmh": 868.2,
       "relative_rotation_axis": 25.2,
-      "textures": ["mars.jpg"]
+      "textures": ["mars.jpg"],
+      "color_avg": "#FF4500",
+      "atmoshpere_thickness": 2
     },
     {
       "name": "jupiter",
@@ -82,7 +90,9 @@
       "curiosity": "Jowisz ma potężną atmosferę z widocznymi pasami chmur, a najbardziej charakterystycznym elementem jest Wielka Czerwona Plama - ogromna burza atmosferyczna trwająca od co najmniej 300 lat.",
       "rotation_speed_kmh": 12.6,
       "relative_rotation_axis": 3.1,
-      "textures": ["jupiter.jpg"]
+      "textures": ["jupiter.jpg"],
+      "color_avg": "#FF8C00",
+      "atmoshpere_thickness": 9
     },
     {
       "name": "saturn",
@@ -99,7 +109,9 @@
       "curiosity": "Saturn ma niesamowicie widoczne pierścienie, które są złożone z setek tysięcy małych fragmentów lodu i skał.",
       "rotation_speed_kmh": 10.6,
       "relative_rotation_axis": 26.7,
-      "textures": ["saturn.jpg"]
+      "textures": ["saturn.jpg"],
+      "color_avg": "#D2B48C",
+      "atmoshpere_thickness": 6
     },
     {
       "name": "uranus",
@@ -116,7 +128,9 @@
       "curiosity": "Uran jest jedyną planetą w układzie słonecznym, która została nazwana na cześć postaci z mitologii greckiej, a nie rzymskiej.",
       "rotation_speed_kmh": -17.2,
       "relative_rotation_axis": 97.8,
-      "textures": ["uranus.jpg"]
+      "textures": ["uranus.jpg"],
+      "color_avg": "#40E0D0",
+      "atmoshpere_thickness": 4
     },
     {
       "name": "neptune",
@@ -133,6 +147,8 @@
       "curiosity": "Na Neptunie występuje najpotężniejsza znana nam burza atmosferyczna, zwaną Młodą Ciemną Plamą, która pojawiła się w 2018 roku.",
       "rotation_speed_kmh": 16.1,
       "relative_rotation_axis": 28.3,
-      "textures": ["neptune.jpg"]
+      "textures": ["neptune.jpg"],
+      "color_avg": "#00008B",
+      "atmoshpere_thickness": 7
     }
 ]

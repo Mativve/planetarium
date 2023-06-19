@@ -1,32 +1,37 @@
 ---
-const { name, diameter_km, temperature, gravity_ms, composition, population, description, curiosity, rotation_speed_kmh, relative_rotation_axis, textures } = Astro.props.data;
+import { format } from 'numerable';
+
+const { name, diameter_km, temperature, gravity_ms, composition, population, description, curiosity, rotation_speed_kmh, relative_rotation_axis, textures, color_avg, atmoshpere_thickness } = Astro.props.data;
+const deg_s = (Math.abs(rotation_speed_kmh) / 3.6) * (360 / diameter_km) * 7;
 ---
-<article class="planet">
+<article class="planet" style={ `--rotateaxis: ${relative_rotation_axis}deg; --rotatespeed: ${deg_s}s; --avgcolor: ${color_avg}03; --atmospherethick: ${1 + (atmoshpere_thickness / 200)}` }>
     <div class="container">
-        <div class="planer-inner">
+        <div class="planet-inner">
             <div class="planet-sphere" data-layers={ textures.length }>
                 <div class="planet-sphere-inner">
-                    { 
-                        textures.map((t, i) => {
-                            return <img src={ `./img/${t}` } data-layer={++i} alt={ name }/>
-                        })
-                    }
+                    <div class="planet-textures" data-planet={ name }>
+                        { 
+                            textures.map((t, i) => {
+                                return <div class="planet-texture" data-layer={++i} alt={ name } style={ `--src: url(./assets/img/${t});` }></div>
+                            })
+                        }
+                    </div>
                 </div>
             </div>
             <div class="planet-info">
                 <h2 class="planet-name">{ name }</h2>
-                <div class="planet-status">
-                    <div class="planet-diameter">{ diameter_km } km</div>
-                    <div class="planet-gravity">{ gravity_ms } m/s<sup>2</sup></div>
-                    <div class="planet-population">{ population }</div>
-                    <div class="planet-rotation-speed">{ rotation_speed_kmh } km/h</div>
-                    <div class="planet-rotation-axis">{ relative_rotation_axis } &deg;</div>
-                </div>
+                <ul class="planet-status">
+                    <li class="planet-diameter"><span class="icon"><i class="ph-light ph-arrows-horizontal"></i></span> <span>{ format(diameter_km, '0,0.X') } km</span></li>
+                    <li class="planet-gravity"><span class="icon"><i class="ph-light ph-arrow-line-down"></i></span> <span>{ format(gravity_ms, '0.0') } m/s<sup>2</sup></span></li>
+                    <li class="planet-population"><span class="icon"><i class="ph-light ph-users-three"></i></span> <span>{ format(population, '0.X a') }</span></li>
+                    <li class="planet-rotation-speed"><span class="icon"><i class="ph-light ph-gauge"></i></span> <span>{ format(rotation_speed_kmh, '0.0') } km/h</span></li>
+                    <li class="planet-rotation-axis"><span class="icon"><i class="ph-light ph-compass-tool"></i></span> <span>{ format(relative_rotation_axis, '0.0') } &deg;</span></li>
+                </ul>
                 <div class="planet-temperature">
                     <div class="planet-scale">
                         { 
                             Object.keys(temperature).map(k => {
-                                return <span class={k}>{temperature[k]} &deg;C</span>
+                                return <span class={k}>{temperature[k]} &deg;C <span class="sub">({k})</span></span>
                             })
                         }
                     </div>
@@ -47,10 +52,277 @@ const { name, diameter_km, temperature, gravity_ms, composition, population, des
 
 <style lang="scss">
     .planet{
+        position: relative;
+        scroll-snap-align: start;
+        
         height: 100vh;
         overflow: hidden;
 
         display: flex;
         align-items: center;
+        z-index: 2;
+
+        &::after{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to bottom, var(--c_secondary-dark), transparent 40%, transparent 60%, var(--c_secondary-dark) 100%);
+        }
+
+        &::before{
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 70%;
+            padding-bottom: 70%;
+            border-radius: 50%;
+            transform: translate(-15%, -50%);
+            // filter: blur(25px);
+            background-color: var(--avgcolor);
+        }
+
+        &-inner{
+            display: flex;
+            align-items: center;
+        }
+
+        &-sphere{
+            position: relative;
+            width: 30%;
+            transform: translateX(-10%);
+
+            &::after, &::before{
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                box-shadow:
+                    0 0 20px 20px var(--avgcolor), 0 0 40px 40px var(--avgcolor),
+                    inset 10px 0 20px rgba(255, 255, 255, 0.25), inset 50px 0 60px rgba(255, 255, 255, 0.125), inset 100px 0 110px rgba(255, 255, 255, 0.05), inset 100px 0 110px rgba(255, 255, 255, 0.05),
+                    inset -10px 0 20px rgba(0, 0, 0, 1), inset -50px 0 60px rgba(0, 0, 0, 0.25), inset -100px 0 110px rgba(0, 0, 0, 0.5), inset -100px 0 110px rgba(0, 0, 0, 0.5);
+                border-radius: 50%;
+                overflow: hidden;
+                z-index: 1;
+
+                transform: scale(1.005);
+            }
+
+            &::after{
+                opacity: 0.25;
+            }
+
+            &::before{
+                mix-blend-mode: luminosity;
+            }
+
+            &-inner{
+                position: relative;
+                padding-bottom: 100%;
+                transform: rotate(var(--rotateaxis, 0deg));
+
+                &::before{
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    height: 130%;
+                    width: 1px;
+                    transform: translate(-50%, -50%);
+                    z-index: -1;
+                    
+                    border-right: 2px dashed rgba(255, 255, 255, 0.5);
+                }
+            }
+        }
+
+        &-textures{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
+            &[data-planet="earth"]{
+                [data-layer="2"]{
+                    -webkit-mask-image: -webkit-gradient(
+                        linear, right top, left top, 
+                        color-stop(0.00,  rgba(0,0,0,1)),
+                        color-stop(0.30,  rgba(0,0,0,1)),
+                        color-stop(0.60,  rgba(0,0,0,0)),
+                        color-stop(0.9,  rgba(0,0,0,0)));
+                }
+            }
+        }
+
+        &-texture{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            z-index: 0;
+            transform: scale(1);
+
+            background-image: var(--src);
+            background-repeat: repeat;
+            background-size: auto 100%;
+            background-position: 0% 0;
+            will-change: background;
+
+            border-radius: 50%;
+            overflow: hidden;
+
+            // animation: rotate var(--rotatespeed, 5s) linear infinite forwards;
+
+            &[data-layer="2"]{
+                z-index: 1;
+                opacity: 1;
+            }
+        }
+
+
+        &-info{
+            width: 70%;
+            position: relative;
+            z-index: 1;
+            padding-left: 64px;
+
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            grid-template-rows: 1fr;
+            grid-template-areas:
+            "name"
+            "status"
+            "temperature"
+            "composition"
+            "description"
+            "curiosity";
+            gap: 16px;
+        }
+
+        &-name{
+            grid-area: name;
+        }
+
+        &-status{
+            grid-area: status;
+
+            list-style: none;
+
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+
+            li{
+                flex: 1;
+            }
+        }
+
+        &-diameter{
+
+        }
+
+        &-gravity{
+
+        }
+
+        &-population{
+
+        }
+
+        &-rotation-speed{
+
+        }
+
+        &-rotation-axis{
+
+        }
+
+
+        &-temperature{
+            grid-area: temperature;
+
+            position: relative;
+
+            width: 100%;
+            height: 64px;
+            
+            &::before{
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 8px;
+                background-image: linear-gradient(to right, #01334d, #0b4764, #357ca0, #119abc, #5dbed0, #7bd0e0, #c1e6e5, #e6e1dd, #e3a0a2, #e18474, #df5646, #cc1c22, #b0161b, #8b041a, #590102);
+                border-radius: 64px;
+            }
+
+            .min, .avg, .max{
+                position: absolute;
+                top: 0;
+                left: 0;
+                transform: translate(-50%, 35%);
+                text-align: center;
+
+                .sub{
+                    display: block;
+                    font-size: var(--step--1);
+                    opacity: 0.5;
+                }
+
+                &::before{
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 50%;
+                    transform: translate(-50%, -110%);
+                    width: 2px;
+                    height: 24px;
+                    background-color: var(--c_white);
+                    z-index: 1;
+                }
+            }
+
+            .min{
+                left: 15%;
+            }
+
+            .avg{
+                left: 50%;
+            }
+
+            .max{
+                left: 85%;
+            }
+        }
+
+        &-composition{
+            grid-area: composition;
+        }
+
+        &-description{
+            grid-area: description;
+        }
+
+        &-curiosity{
+            grid-area: curiosity;
+        }
+    }
+
+    @keyframes rotate{
+        0%{
+            background-position: 0% 0%;
+        }
+        100%{
+            background-position: 200% 0%;
+        }
     }
 </style>
