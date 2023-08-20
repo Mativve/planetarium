@@ -1,0 +1,249 @@
+{
+    "stars": [
+        {
+            "name": "sun",
+            "textures": ["sun.jpg"],
+            "diameter_km": 1392000,
+            "temperature": {
+                "min": 5505,
+                "avg": 5778,
+                "max": 6300
+            },
+            "gravity_m_s2": 274,
+            "composition": "Primarily hydrogen and helium",
+            "population": 0,
+            "rotation_speed_kmh": 0,
+            "rotation_axis_deg": 0,
+            "color_hex": "#FDB813",
+            "atmosphere_thickness": 10,
+            "number_of_satellites": 0,
+            "distance_from_sun_km": 0,
+            "orbital_period_days": 0,
+            "age_years": 4.6e9,
+            "mass_kg": 1.989e30,
+            "description": "The Sun is the star at the center of the Solar System. It is a nearly perfect sphere of hot plasma, emitting light and energy.",
+            "interesting_facts": [
+                "The Sun accounts for 99.86% of the mass in the Solar System.",
+                "The Sun's energy is generated through nuclear fusion in its core, where hydrogen is converted into helium."
+            ]
+        }
+    ],
+    "planets": [
+        {
+            "name": "mercury",
+            "textures": ["mercury.jpg"],
+            "diameter_km": 4879,
+            "temperature": {
+                "min": -173,
+                "avg": 167,
+                "max": 427
+            },
+            "gravity_m_s2": 3.7,
+            "composition": "Rocky surface, iron core",
+            "population": 0,
+            "rotation_speed_kmh": 10.9,
+            "rotation_axis_deg": 0.034,
+            "color_hex": "#C0C0C0",
+            "atmosphere_thickness": 0,
+            "number_of_satellites": 0,
+            "distance_from_sun_km": 57910000,
+            "orbital_period_days": 88,
+            "age_years": 4.5e9,
+            "mass_kg": 3.3011e23,
+            "description": "Mercury is the smallest and closest planet to the Sun. It has a rocky surface and a thin atmosphere. Mercury experiences extreme temperature variations.",
+            "interesting_facts": [
+                "Mercury has the largest daily temperature variations of any planet in the Solar System.",
+                "Mercury has no moons and no substantial atmosphere."
+            ]
+        },
+        {
+            "name": "venus",
+            "textures": ["venus_surface.jpg", "venus_atmosphere.jpg"],
+            "diameter_km": 12104,
+            "temperature": {
+                "min": 462,
+                "avg": 464,
+                "max": 471
+            },
+            "gravity_m_s2": 8.87,
+            "composition": "Rocky surface, dense atmosphere",
+            "population": 0,
+            "rotation_speed_kmh": -6.5,
+            "rotation_axis_deg": 177.4,
+            "color_hex": "#E8A46F",
+            "atmosphere_thickness": 9,
+            "number_of_satellites": 0,
+            "distance_from_sun_km": 108200000,
+            "orbital_period_days": 225,
+            "age_years": 4.5e9,
+            "mass_kg": 4.8675e24,
+            "description": "Venus is the second planet from the Sun. It has a dense atmosphere and extremely high surface temperatures, making it the hottest planet in the Solar System.",
+            "interesting_facts": [
+                "Venus has the longest day of any planet in the Solar System.",
+                "Venus's atmosphere is mostly carbon dioxide and creates a greenhouse effect that traps heat on the surface."
+            ]
+        },
+        {
+            "name": "earth",
+            "textures": ["earth_day.jpg", "earth_night.jpg", "moon.jpg"],
+            "diameter_km": 12742,
+            "temperature": {
+                "min": -89,
+                "avg": 15,
+                "max": 57
+            },
+            "gravity_m_s2": 9.81,
+            "composition": "Rocky surface, iron core",
+            "population": 7700000000,
+            "rotation_speed_kmh": 1674.4,
+            "rotation_axis_deg": 0,
+            "color_hex": "#00ADEF",
+            "atmosphere_thickness": 10,
+            "number_of_satellites": 1,
+            "distance_from_sun_km": 149600000,
+            "orbital_period_days": 365.25,
+            "age_years": 4.5e9,
+            "mass_kg": 5.97237e24,
+            "description": "Earth is the third planet from the Sun and the only known celestial body to support life. It has a diverse environment and abundant water resources.",
+            "interesting_facts": [
+                "Earth is the only planet in the Solar System known to have liquid water on its surface.",
+                "Earth has a natural satellite, the Moon, which plays a significant role in stabilizing its axis and creating tides."
+            ]
+        },
+        {
+            "name": "mars",
+            "textures": ["mars.jpg"],
+            "diameter_km": 6779,
+            "temperature": {
+                "min": -153,
+                "avg": -63,
+                "max": 20
+            },
+            "gravity_m_s2": 3.721,
+            "composition": "Rocky surface, iron oxide",
+            "population": 0,
+            "rotation_speed_kmh": 868.2,
+            "rotation_axis_deg": 25.2,
+            "color_hex": "#FF5733",
+            "atmosphere_thickness": 2,
+            "number_of_satellites": 2,
+            "distance_from_sun_km": 227940000,
+            "orbital_period_days": 687,
+            "age_years": 4.6e9,
+            "mass_kg": 6.4171e23,
+            "description": "Mars is the fourth planet from the Sun. It has a thin atmosphere and a reddish appearance due to iron oxide on its surface.",
+            "interesting_facts": [
+                "Mars is home to the tallest volcano and the deepest, longest canyon in the Solar System.",
+                "Mars has polar ice caps made of water and carbon dioxide."
+            ]
+        },
+        {
+            "name": "jupiter",
+            "textures": ["jupiter.jpg"],
+            "diameter_km": 139820,
+            "temperature": {
+                "min": -145,
+                "avg": -108,
+                "max": -83
+            },
+            "gravity_m_s2": 24.79,
+            "composition": "Primarily hydrogen and helium",
+            "population": 0,
+            "rotation_speed_kmh": 12.6,
+            "rotation_axis_deg": 3.1,
+            "color_hex": "#F5DF4D",
+            "atmosphere_thickness": 9,
+            "number_of_satellites": 79,
+            "distance_from_sun_km": 778330000,
+            "orbital_period_days": 4332.59,
+            "age_years": 4.6e9,
+            "mass_kg": 1.8982e27,
+            "description": "Jupiter is the fifth planet from the Sun and the largest planet in the Solar System. It is mainly composed of gases and does not have a distinct surface. Jupiter has numerous moons and distinct atmospheric bands.",
+            "interesting_facts": [
+                "Jupiter has the most moons of any planet in the Solar System - currently known to have over 70.",
+                "Jupiter has a great red spot - a massive storm that has been ongoing for at least 300 years."
+            ]
+        },
+        {
+            "name": "saturn",
+            "textures": ["saturn.jpg"],
+            "diameter_km": 116460,
+            "temperature": {
+                "min": -185,
+                "avg": -138,
+                "max": -88
+            },
+            "gravity_m_s2": 10.44,
+            "composition": "Primarily hydrogen and helium",
+            "population": 0,
+            "rotation_speed_kmh": 10.6,
+            "rotation_axis_deg": 26.7,
+            "color_hex": "#FFCC7F",
+            "atmosphere_thickness": 6,
+            "number_of_satellites": 82,
+            "distance_from_sun_km": 1429400000,
+            "orbital_period_days": 10759.22,
+            "age_years": 4.6e9,
+            "mass_kg": 5.6834e26,
+            "description": "Saturn is the sixth planet from the Sun and is known for its prominent ring system. It is a gas giant with a yellowish hue.",
+            "interesting_facts": [
+                "Saturn's rings are made up of ice particles with varying sizes, ranging from tiny grains to large chunks.",
+                "Saturn is the least dense planet in the Solar System and could float on water if a sufficiently large body of water were available."
+            ]
+        },
+        {
+            "name": "career",
+            "textures": ["uranus.jpg"],
+            "diameter_km": 50724,
+            "temperature": {
+                "min": -224,
+                "avg": -195,
+                "max": -173
+            },
+            "gravity_m_s2": 8.69,
+            "composition": "Primarily hydrogen and helium, with a small amount of ice",
+            "population": 0,
+            "rotation_speed_kmh": -17.2,
+            "rotation_axis_deg": 97.8,
+            "color_hex": "#8FDDE7",
+            "atmosphere_thickness": 4,
+            "number_of_satellites": 27,
+            "distance_from_sun_km": 2870990000,
+            "orbital_period_days": 30688.5,
+            "age_years": 4.5e9,
+            "mass_kg": 8.6810e25,
+            "description": "Uranus is the seventh planet from the Sun and is known for its unique tilt on its axis. It has a bluish-green color and a turbulent atmosphere.",
+            "interesting_facts": [
+                "Uranus is often referred to as the \"sideways planet\" due to its extreme axial tilt, which is practically parallel to the plane of its orbit.",
+                "Uranus has extremely cold temperatures and a very windy atmosphere."
+            ]
+        },
+        {
+            "name": "neptune",
+            "textures": ["neptune.jpg"],
+            "diameter_km": 49244,
+            "temperature": {
+                "min": -218,
+                "avg": -200,
+                "max": -184
+            },
+            "gravity_m_s2": 11.15,
+            "composition": "Primarily hydrogen and helium",
+            "population": 0,
+            "rotation_speed_kmh": 16.1,
+            "rotation_axis_deg": 28.3,
+            "color_hex": "#2456FF",
+            "atmosphere_thickness": 7,
+            "number_of_satellites": 14,
+            "distance_from_sun_km": 4498252900,
+            "orbital_period_days": 60190.03,
+            "age_years": 4.5e9,
+            "mass_kg": 1.02413e26,
+            "description": "Neptune is the eighth and farthest planet from the Sun. It is a gas giant with a distinct blue color. It has a turbulent atmosphere and moons.",
+            "interesting_facts": [
+                "Neptune has the strongest winds of any planet in the Solar System, reaching speeds of over 2,000 km/h.",
+                "Neptune has a Great Dark Spot - a massive atmospheric storm larger than Earth."
+            ]
+        }
+    ]
+}

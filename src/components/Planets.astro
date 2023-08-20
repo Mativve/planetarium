@@ -1,5 +1,5 @@
 ---
-import planetsJSON from '../data/planets.json';
+import planetsJSON from '../data/planets_range.json';
 import Planet from '../single/Planet.astro';
 ---
 
@@ -10,3 +10,128 @@ import Planet from '../single/Planet.astro';
         })
     }
 </section>
+
+<style lang="scss">
+    .planets{
+        // display: flex;
+        // overflow: hidden;
+        // overflow-x: auto;
+    }
+</style>
+
+<script>
+    const scrollTarget = document.querySelector("main");
+    const planets = document.querySelectorAll('article.planet');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            console.log(entry);
+
+            if( entry.isIntersecting ){
+                entry.target.classList.add("show");
+            }
+            else{
+                // entry.target.classList.remove("show");
+            }
+        });
+    }, {
+        root: scrollTarget,
+        rootMargin: "32px",
+        threshold: 0.5,
+    });
+
+    function easeInExpo(x: number): number {
+        return x === 0 ? 0 : Math.pow(2, 10 * x - 10);
+    }
+
+    planets.forEach((planet) => {        
+        const datas = planet.querySelectorAll('.planet-data-wrapper');
+
+        observer.observe(planet);
+
+        datas.forEach((data) => {
+            let deg = getComputedStyle(data).getPropertyValue('--deg');
+
+            data.setAttribute("end_deg", deg);
+        });
+
+        planets.forEach((planet) => {
+            if( !planet.classList.contains("show") ){ return false; }
+            let perc = percentageSeen(planet) / 100;
+
+            const datas = planet.querySelectorAll('.planet-data-wrapper');
+            datas.forEach(data => {
+                let end_size = 1;
+                let end_opacity = 1;
+                let end_deg = parseFloat(data.getAttribute("end_deg"));
+
+                // data.style.setProperty('--opacity', `${ (easeInExpo(end_opacity * perc)).toFixed(2) }`);
+                // data.style.setProperty('--deg', `${ (end_deg * perc).toFixed(2) }deg`);
+
+                // planet.style.setProperty('--title-size', `${ (end_size * perc) }`);
+                // // planet.style.setProperty('--back-title-rotate', `${ (-90 + (90 * perc)) }deg`);
+                // // planet.style.setProperty('--back-title-rotate-inv', `${ (90 - (90 * perc)) }deg`);
+                // planet.style.setProperty('--content-size', `${ (end_size * perc) }`);
+
+                data.style.setProperty('--opacity', `${ (easeInExpo(end_opacity)).toFixed(2) }`);
+                data.style.setProperty('--deg', `${ (end_deg).toFixed(2) }deg`);
+
+                planet.style.setProperty('--title-size', `${ (end_size) }`);
+                // planet.style.setProperty('--back-title-rotate', `${ (-90 + (90 * perc)) }deg`);
+                // planet.style.setProperty('--back-title-rotate-inv', `${ (90 - (90 * perc)) }deg`);
+                planet.style.setProperty('--content-size', `${ (end_size) }`);
+            });
+        });
+    });
+
+    // scrollTarget.addEventListener("scroll", () => {
+
+    //     planets.forEach((planet) => {
+    //         if( !planet.classList.contains("show") ){ return false; }
+    //         let perc = percentageSeen(planet) / 100;
+
+    //         const datas = planet.querySelectorAll('.planet-data-wrapper');
+    //         datas.forEach(data => {
+    //             let end_size = 1;
+    //             let end_opacity = 1;
+    //             let end_deg = parseFloat(data.getAttribute("end_deg"));
+
+    //             // data.style.setProperty('--opacity', `${ (easeInExpo(end_opacity * perc)).toFixed(2) }`);
+    //             // data.style.setProperty('--deg', `${ (end_deg * perc).toFixed(2) }deg`);
+
+    //             // planet.style.setProperty('--title-size', `${ (end_size * perc) }`);
+    //             // // planet.style.setProperty('--back-title-rotate', `${ (-90 + (90 * perc)) }deg`);
+    //             // // planet.style.setProperty('--back-title-rotate-inv', `${ (90 - (90 * perc)) }deg`);
+    //             // planet.style.setProperty('--content-size', `${ (end_size * perc) }`);
+
+    //             data.style.setProperty('--opacity', `${ (easeInExpo(end_opacity)).toFixed(2) }`);
+    //             data.style.setProperty('--deg', `${ (end_deg).toFixed(2) }deg`);
+
+    //             planet.style.setProperty('--title-size', `${ (end_size) }`);
+    //             // planet.style.setProperty('--back-title-rotate', `${ (-90 + (90 * perc)) }deg`);
+    //             // planet.style.setProperty('--back-title-rotate-inv', `${ (90 - (90 * perc)) }deg`);
+    //             planet.style.setProperty('--content-size', `${ (end_size) }`);
+    //         });
+    //     });
+    // });
+
+    const percentageSeen = (el) => {
+        // Get the relevant measurements and positions
+        // const viewportHeight = window.innerHeight;
+        // const scrollTop = window.scrollY;
+        const viewportHeight = window.innerHeight;
+        const scrollTop = scrollTarget.scrollTop;
+        const elementOffsetTop = el.offsetTop;
+        const elementHeight = el.offsetHeight;
+
+        // Calculate percentage of the element that's been seen
+        const distance = scrollTop + viewportHeight - elementOffsetTop;
+        const percentage = Math.round(
+            distance / (((viewportHeight / 3) + (elementHeight / 2)) / 100)
+        );
+
+        // Restrict the range to between 0 and 100
+        const perc = Math.min(100, Math.max(0, percentage));
+
+        return perc;
+    };
+</script>

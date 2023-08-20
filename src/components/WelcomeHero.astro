@@ -4,12 +4,10 @@
 
 <header class="welcome-hero">
     <div class="container">
-        <h1 class="h2 welcome-hero-title">planetarium</h1>
+        <h1 class="h2 welcome-hero-title" data-title="planetarium">planetarium</h1>
     </div>
     
-    <button class="welcome-hero-more"><span>odkryj kosmos</span></button>
-
-    <div id="particles" class="particles"></div>
+    <button class="welcome-hero-more"><span>discover the cosmos</span></button>
 </header>
 
 <style lang="scss">
@@ -21,23 +19,41 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        
+        // background-color: var(--c_secondary-dark);
 
-        &::after{
+        scroll-snap-align: start;
+
+        &::before{
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('./assets/img/tree2.png');
-            background-repeat: repeat-x;
-            background-size: 100% auto;
-            background-position: bottom center;
-            z-index: 2;
+        }
+
+        &::before{
+            // box-shadow: inset 0 0 20vw 20vw var(--c_secondary-dark);
         }
 
         &-title{
+            position: relative;
             letter-spacing: 2px;
+            z-index: 3;
+            text-align: center;
+
+            &::after{
+                content: '';
+                display: block;
+                all: inherit;
+
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                filter: blur(25px);
+            }
         }
 
         &-more{
@@ -92,18 +108,6 @@
                     opacity: 1;
                 }
             }
-        }
-
-        .particles{
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-            opacity: 0.5;
-            box-shadow: inset 0 -50px 100px 100px var(--c_secondary-dark);
         }
     }
 

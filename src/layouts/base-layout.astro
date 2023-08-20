@@ -11,11 +11,13 @@ import Nav from '../components/Nav.astro';
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace&family=Geologica:wght@200;400&display=swap" rel="stylesheet">
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js' integrity='sha512-Kef5sc7gfTacR7TZKelcrRs15ipf7+t+n7Zh6mKNJbmW+/RRdCW9nwfLn4YX0s2nO6Kv5Y2ChqgIakaC6PW09A==' crossorigin='anonymous'></script>
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://unpkg.com/@phosphor-icons/web@2.0.3/src/regular/style.css" rel="stylesheet">
 </head>
 <body>
+    <canvas id="sky" class="sky"></canvas>
+
     <Nav/>
+
     <!-- CONTENT: START -->
     <main>
         <slot />
@@ -36,6 +38,7 @@ import Nav from '../components/Nav.astro';
         --font_main: 'Geologica', sans-serif;
         --font_heading: 'Bruno Ace', cursive;
 
+        --step--2: clamp(0.69rem, calc(0.66rem + 0.19vw), 0.80rem);
         --step--1: clamp(0.83rem, calc(0.77rem + 0.30vw), 1.00rem);
         --step-0: clamp(1.00rem, calc(0.91rem + 0.45vw), 1.25rem);
         --step-1: clamp(1.20rem, calc(1.07rem + 0.66vw), 1.56rem);
@@ -43,12 +46,19 @@ import Nav from '../components/Nav.astro';
         --step-3: clamp(1.73rem, calc(1.47rem + 1.30vw), 2.44rem);
         --step-4: clamp(2.07rem, calc(1.72rem + 1.78vw), 3.05rem);
         --step-5: clamp(2.49rem, calc(2.01rem + 2.41vw), 3.82rem);
+
+        scroll-behavior: smooth;
     }
 
     *{
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+
+        &::selection{
+            background-color: var(--c_secondary);
+            color: var(--c_white);
+        }
     }
 
     html, body{
@@ -63,9 +73,6 @@ import Nav from '../components/Nav.astro';
         color: var(--c_white);
         background-color: var(--c_secondary);
         overflow-y: scroll;
-
-        scroll-behavior: smooth;
-        scroll-snap-type: y mandatory;
     }
 
     h1, h2, h3, h4, h5, h6,
@@ -83,9 +90,19 @@ import Nav from '../components/Nav.astro';
     small, .text-small{ font-size: var(--step--1); }
 
     .container{
-        max-width: 1200px;
+        max-width: 1400px;
+        width: 100%;
         margin: 0 auto;
         padding: 0 15px;
+    }
+
+    main{
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        scroll-behavior: smooth;
+        overflow: auto;
+        scroll-snap-type: y mandatory;
     }
 
     .btn{
@@ -101,7 +118,9 @@ import Nav from '../components/Nav.astro';
             font-size: var(--step--1);
             padding: 0.75rem;
             opacity: 0.5;
-            transition: opacity 0.4s ease-in-out;
+
+            transition-property: opacity, color;
+            transition: 0.4s ease-in-out;
 
             &:hover, &:focus{
                 color: var(--c_primary);
@@ -109,117 +128,326 @@ import Nav from '../components/Nav.astro';
             }
         }
     }
+
+    .sky{
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        transform: translateY( var(--scroll, 0%));
+    }
 </style>
 
 <script>
-particlesJS("particles", {
-    "particles": {
-        "number": {
-            "value": 255,
-            "density": {
-                "enable": true,
-                "value_area": 255
-            }
-        },
-        "color": {
-            "value": "#ffffff"
-        },
-        "shape": {
-            "type": "circle",
-            "stroke": {
-                "width": 0,
-                "color": "#000000"
-            },
-            "polygon": {
-                "nb_sides": 5
-            },
-            "image": {
-                "src": "img/github.svg",
-                "width": 100,
-                "height": 100
-            }
-        },
-        "opacity": {
-            "value": 0.48927153781200905,
-            "random": false,
-            "anim": {
-                "enable": true,
-                "speed": 0.2,
-                "opacity_min": 0,
-                "sync": false
-            }
-        },
-        "size": {
-            "value": 2,
-            "random": true,
-            "anim": {
-                "enable": true,
-                "speed": 2,
-                "size_min": 0,
-                "sync": false
-            }
-        },
-        "line_linked": {
-            "enable": false,
-            "distance": 150,
-            "color": "#ffffff",
-            "opacity": 0.4,
-            "width": 1
-        },
-        "move": {
-            "enable": true,
-            "speed": 0.2,
-            "direction": "none",
-            "random": true,
-            "straight": false,
-            "out_mode": "out",
-            "bounce": false,
-            "attract": {
-                "enable": false,
-                "rotateX": 600,
-                "rotateY": 1200
-            }
+
+    function getColor(variable){
+        return getComputedStyle(document.documentElement).getPropertyValue(variable);
+    }
+
+    class StarrySky{
+        constructor(){
+            //Canvas and settings
+            this.canvas = document.getElementById("sky");
+            this.context = this.canvas.getContext("2d");
+            this.width = this.canvas.width = window.innerWidth;
+            this.height = this.canvas.height = window.innerHeight * 2;
+            this.stars = [];
+            this.shootingStarColors = [`255, 255, 255`, `176, 30, 34`, `133, 97, 25`, `57, 36, 94`, `130, 67, 33`, `42, 125, 135`],
+            this.shootingStars = [];
+            this.layers = [{
+                    speed: 0,
+                    scale: 0.2,
+                    count: 440
+                },
+            {
+                    speed: 0.015,
+                    scale: 0.2,
+                    count: 320
+                },
+            {
+                    speed: 0.03,
+                    scale: 0.5,
+                    count: 50
+                },
+            {
+                    speed: 0.05,
+                    scale: 0.75,
+                    count: 30
+                },
+            ];
+            this.starsAngle = 145;
+            this.shootingStarsAngle = 145;
+
+            this.shootingStarSpeed ={
+                min: 10,
+                max: 30,
+            };
+            this.shootingStarOpacityDelta = 0.03;
+            this.trailLengthDelta = 0.01;
+            this.shootingStarEmittingInterval = 3000;
+            this.shootingStarLifeTime = 100;
+            this.maxTrailLength = 300;
+            this.starBaseRadius = 2;
+            this.shootingStarRadius = 3;
+            this.paused = false;
+
+            // Bind methods to the class instance
+            this.update = this.update.bind(this);
+            this.createShootingStar = this.createShootingStar.bind(this);
+            this.killShootingStar = this.killShootingStar.bind(this);
+            this.drawStar = this.drawStar.bind(this);
+            this.drawShootingStar = this.drawShootingStar.bind(this);
+
+            // Run
+            this.update();
+
+            // Shooting stars
+            setInterval(() =>{
+                if (this.paused) return;
+                this.createShootingStar();
+            }, this.shootingStarEmittingInterval);
+
+            window.onfocus = () =>{
+                this.paused = false;
+            };
+
+            window.onblur = () =>{
+                this.paused = true;
+            };
+
+            window.onresize = () =>{
+                this.width = this.canvas.width = window.innerWidth;
+                this.height = this.canvas.height = window.innerHeight * 2;
+
+                this.stars = [];
+                this.context.clearRect(0, 0, this.width, this.height);
+
+                this.createStars();
+            };
+           
+            this.createStars();
         }
-    },
-    "interactivity": {
-        "detect_on": "canvas",
-        "events": {
-            "onhover": {
-                "enable": true,
-                "mode": "bubble"
-            },
-            "onclick": {
-                "enable": true,
-                "mode": "push"
-            },
-            "resize": true
-        },
-        "modes": {
-            "grab": {
-                "distance": 400,
-                "line_linked": {
-                    "opacity": 1
+
+        // Create all stars
+        createStars(){
+            for (const layer of this.layers){
+                for (let i = 0; i < layer.count; i += 1){
+                    const star = this.createStar(
+                        this.randomRange(0, this.width),
+                        this.randomRange(0, this.height),
+                        0,
+                        0
+                    );
+                    star.radius = this.starBaseRadius * layer.scale;
+                    star.setSpeed(layer.speed);
+                    star.setHeading(this.degreesToRads(this.starsAngle));
+                    this.stars.push(star);
                 }
-            },
-            "bubble": {
-                "distance": 83.91608391608392,
-                "size": 1,
-                "duration": 3,
-                "opacity": 1,
-                "speed": 3
-            },
-            "repulse": {
-                "distance": 200,
-                "duration": 0.4
-            },
-            "push": {
-                "particles_nb": 4
-            },
-            "remove": {
-                "particles_nb": 2
             }
         }
-    },
-    "retina_detect": true
-});
+
+        createStar(x, y, speed, direction){
+            return{
+                x: x,
+                y: y,
+                vx: Math.cos(direction) * speed,
+                vy: Math.sin(direction) * speed,
+                radius: 0,
+                getSpeed: function (){
+                    return Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+                },
+                setSpeed: function (speed){
+                    const heading = this.getHeading();
+                    this.vx = Math.cos(heading) * speed;
+                    this.vy = Math.sin(heading) * speed;
+                },
+                getHeading: function (){
+                    return Math.atan2(this.vy, this.vx);
+                },
+                setHeading: function (heading){
+                    const speed = this.getSpeed();
+                    this.vx = Math.cos(heading) * speed;
+                    this.vy = Math.sin(heading) * speed;
+                },
+                update: function (){
+                    this.x += this.vx;
+                    this.y += this.vy;
+                },
+            };
+        }
+
+        lineToAngle(x1, y1, length, radians){
+            const x2 = x1 + length * Math.cos(radians),
+                y2 = y1 + length * Math.sin(radians);
+            return{
+                x: x2,
+                y: y2
+            };
+        }
+
+        randomRange(min, max){
+            return min + Math.random() * (max - min);
+        }
+
+        randomItem(arr){
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        degreesToRads(degrees){
+            return (degrees / 180) * Math.PI;
+        }
+
+        createShootingStar(){
+            this.shootingStarsAngle = this.randomRange(45, 135);
+
+            const shootingStar = this.createStar(
+                this.randomRange(this.width / 2, this.width),
+                this.randomRange(0, this.height / 2),
+                0,
+                0
+            );
+            shootingStar.setSpeed(this.randomRange(this.shootingStarSpeed.min, this.shootingStarSpeed.max));
+            shootingStar.setHeading(this.degreesToRads(this.shootingStarsAngle));
+            shootingStar.radius = this.shootingStarRadius;
+            shootingStar.opacity = 0;
+            shootingStar.trailLengthDelta = 0;
+            shootingStar.isSpawning = true;
+            shootingStar.isDying = false;
+
+            let color = this.randomItem(this.shootingStarColors);
+            shootingStar.color = color;
+            
+            this.shootingStars.push(shootingStar);
+        }
+
+        killShootingStar(shootingStar){
+            setTimeout(() =>{
+                shootingStar.isDying = true;
+            }, this.shootingStarLifeTime);
+        }
+
+        update(){
+            if (!this.paused){
+                this.context.clearRect(0, 0, this.width, this.height);
+                this.context.fillStyle = getColor("--c_secondary-dark");
+                this.context.fillRect(0, 0, this.width, this.height);
+                this.context.fill();
+
+                for (const star of this.stars){
+                    star.update();
+                    this.drawStar(star);
+                    if (star.x > this.width){
+                        star.x = 0;
+                    }
+                    if (star.x < 0){
+                        star.x = this.width;
+                    }
+                    if (star.y > this.height){
+                        star.y = 0;
+                    }
+                    if (star.y < 0){
+                        star.y = this.height;
+                    }
+                }
+
+                for (let i = 0; i < this.shootingStars.length; i += 1){
+                    const shootingStar = this.shootingStars[i];
+                    if (shootingStar.isSpawning){
+                        shootingStar.opacity += this.shootingStarOpacityDelta;
+                        if (shootingStar.opacity >= 1.0){
+                            shootingStar.isSpawning = false;
+                            this.killShootingStar(shootingStar);
+                        }
+                    }
+                    if (shootingStar.isDying){
+                        shootingStar.opacity -= this.shootingStarOpacityDelta;
+                        if (shootingStar.opacity <= 0.0){
+                            shootingStar.isDying = false;
+                            shootingStar.isDead = true;
+                        }
+                    }
+                    shootingStar.trailLengthDelta += this.trailLengthDelta;
+
+                    shootingStar.update();
+                    if (shootingStar.opacity > 0.0){
+                        this.drawShootingStar(shootingStar);
+                    }
+                }
+
+                // Delete dead shooting shootingStars
+                for (let i = this.shootingStars.length - 1; i >= 0; i--){
+                    if (this.shootingStars[i].isDead){
+                        this.shootingStars.splice(i, 1);
+                    }
+                }
+            }
+            requestAnimationFrame(this.update);
+        }
+
+        drawStar(star){
+            this.context.fillStyle = "rgb(255, 241, 220)";
+            this.context.beginPath();
+            this.context.arc(star.x, star.y, star.radius, 0, Math.PI * 2, false);
+            this.context.fill();
+        }
+
+        drawShootingStar(p){
+            const x = p.x,
+                y = p.y,
+                currentTrailLength = this.maxTrailLength * p.trailLengthDelta,
+                pos = this.lineToAngle(x, y, -currentTrailLength, p.getHeading());
+
+            this.context.fillStyle = `rgba(${p.color} , ${p.opacity})`;
+            // this.context.beginPath();
+            // this.context.arc(x, y, p.radius, 0, Math.PI * 2, false);
+            // this.context.fill();
+            const starLength = 5;
+            this.context.beginPath();
+            this.context.moveTo(x - 1, y + 1);
+
+            this.context.lineTo(x, y + starLength);
+            this.context.lineTo(x + 1, y + 1);
+
+            this.context.lineTo(x + starLength, y);
+            this.context.lineTo(x + 1, y - 1);
+
+            this.context.lineTo(x, y + 1);
+            this.context.lineTo(x, y - starLength);
+
+            this.context.lineTo(x - 1, y - 1);
+            this.context.lineTo(x - starLength, y);
+
+            this.context.lineTo(x - 1, y + 1);
+            this.context.lineTo(x - starLength, y);
+
+            this.context.closePath();
+            this.context.fill();
+
+            //trail
+            this.context.fillStyle = `rgba(${p.color} , ${p.opacity})`;
+            this.context.beginPath();
+            this.context.moveTo(x - 1, y - 1);
+            this.context.lineTo(pos.x, pos.y);
+            this.context.lineTo(x + 1, y + 1);
+            this.context.closePath();
+            this.context.fill();
+        }
+    }
+
+    // Initialize the StarrySky class
+    const skyCanvas = document.getElementById("sky");
+    const starrySky = new StarrySky();
+    
+    const body = document.body, html = document.documentElement;
+    const pageHeight = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+    window.addEventListener('scroll', function(e){
+        const winScroll = window.scrollY;
+        const height = pageHeight - document.body.offsetHeight;
+        const scrolled = parseFloat( ((winScroll / height)).toFixed(4) );
+        
+        skyCanvas.style.setProperty('--scroll', `-${50 * scrolled}%`)
+    });
 </script>

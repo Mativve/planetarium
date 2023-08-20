@@ -1,0 +1,218 @@
+[
+    {
+        "name": "sun",
+        "textures": ["sun.jpg"],
+        "diameter_km": 1392684,
+        "average_temperature_celsius": 5505,
+        "gravity_m_s2": 274,
+        "composition": "Primarily hydrogen and helium",
+        "rotation_speed_kmh": 1.997,
+        "rotation_relative_to_earth": "N/A",
+        "rotation_axis_deg": 0,
+        "color_hex": "#ffdd00",
+        "atmosphere_thickness": 0,
+        "description": "The center of our solar system and the source of light and energy.",
+        "interesting_facts": [
+            "The Sun is a nearly perfect sphere due to its fluid-like state.",
+            "Its energy is generated through nuclear fusion in its core."
+        ],
+        "satellites": [],
+        "distance_light_years": 0,
+        "age_years": "4.6e9",
+        "weight_kg": 1.989e30
+    }, {
+        "name": "mercury",
+        "textures": ["mercury.jpg"],
+        "diameter_km": 4879,
+        "average_temperature_celsius": 167,
+        "gravity_m_s2": 3.7,
+        "composition": "Rocky with a metallic core",
+        "rotation_speed_kmh": 50,
+        "rotation_relative_to_earth": "2:3 resonance",
+        "rotation_axis_deg": 0.034,
+        "color_hex": "#b2b2b2",
+        "atmosphere_thickness": 0,
+        "description": "The closest planet to the Sun, characterized by extreme temperatures and a lack of atmosphere.",
+        "interesting_facts": [
+            "Mercury has a very thin atmosphere, so it cannot retain heat well.",
+            "It experiences the greatest temperature variations in the solar system."
+        ],
+        "satellites": [],
+        "distance_light_years": 0.000016,
+        "age_years": "4.5e9",
+        "weight_kg": 3.285e23
+    }, {
+        "name": "venus",
+        "textures": ["venus_surface.jpg", "venus_atmosphere.jpg"],
+        "diameter_km": 12104,
+        "average_temperature_celsius": 464,
+        "gravity_m_s2": 8.87,
+        "composition": "Rocky with a thick toxic atmosphere",
+        "rotation_speed_kmh": 6.5,
+        "rotation_relative_to_earth": "Clockwise, retrograde rotation",
+        "rotation_axis_deg": 177.4,
+        "color_hex": "#e5d3ae",
+        "atmosphere_thickness": 1,
+        "description": "Venus is a scorching planet with a runaway greenhouse effect, making it the hottest planet in our solar system.",
+        "interesting_facts": [
+            "Its atmosphere is mostly carbon dioxide, causing a strong greenhouse effect.",
+            "Venus rotates in the opposite direction compared to most other planets."
+        ],
+        "satellites": [],
+        "distance_light_years": 0.000042,
+        "age_years": "4.5e9",
+        "weight_kg": 4.867e24
+    }, {
+        "name": "earth",
+        "textures": ["earth_day.jpg", "earth_night.jpg"],
+        "diameter_km": 12742,
+        "average_temperature_celsius": 14,
+        "gravity_m_s2": 9.81,
+        "composition": "Rocky with oceans and a nitrogen-oxygen atmosphere",
+        "rotation_speed_khm": 1674,
+        "rotation_relative_to_earth": "N/A",
+        "rotation_axis_deg": 0,
+        "color_hex": "#1e90ff",
+        "atmosphere_thickness": 1,
+        "description": "Our home planet, teeming with life and a diverse range of ecosystems.",
+        "interesting_facts": [
+            "Earth is the only planet known to support life.",
+            "Its rotation is gradually slowing due to tidal interactions with the Moon."
+        ],
+        "satellites": [
+            {
+                "name": "moon",
+                "texture": "moon.jpg"
+            }
+        ],
+        "distance_light_years": 0.000017,
+        "age_years": "4.5e9",
+        "weight_kg": 5.972e24
+    }, {
+        "name": "mars",
+        "textures": ["mars.jpg"],
+        "diameter_km": 6779,
+        "average_temperature_celsius": -63,
+        "gravity_m_s2": 3.71,
+        "composition": "Rocky with iron-rich soil",
+        "rotation_speed_kmh": 868.22,
+        "rotation_relative_to_earth": "24.6 hours",
+        "rotation_axis_deg": 25.2,
+        "color_hex": "#d17049",
+        "atmosphere_thickness": 0.0009,
+        "description": "A cold and desolate planet with evidence of liquid water in the past.",
+        "interesting_facts": [
+            "Mars has the largest volcano in the solar system, Olympus Mons.",
+            "It has a thin atmosphere composed mostly of carbon dioxide."
+        ],
+        "satellites": 2,
+        "distance_light_years": 0.000072,
+        "age_years": "4.6e9",
+        "weight_kg": 6.417e23
+    }, {
+        "name": "jupiter",
+        "textures": ["jupiter.jpg"],
+        "diameter_km": 139822,
+        "average_temperature_celsius": -145,
+        "gravity_m_s2": 24.79,
+        "composition": "Primarily hydrogen and helium, with a small rocky core",
+        "rotation_speed_kmh": 45300,
+        "rotation_relative_to_earth": "9 hours 56 minutes",
+        "rotation_axis_deg": 3.1,
+        "color_hex": "#ffac00",
+        "atmosphere_thickness": 10,
+        "description": "The largest planet in our solar system, known for its massive size and powerful magnetic field.",
+        "interesting_facts": [
+            "Jupiter has a strong magnetosphere and numerous moons, including the four Galilean moons.",
+            "It has a massive storm called the Great Red Spot, which has been raging for centuries."
+        ],
+        "satellites": 79,
+        "distance_light_years": 0.000006,
+        "age_years": "4.6e9",
+        "weight_kg": 1.899e27
+    }, {
+        "name": "saturn",
+        "textures": ["saturn.jpg"],
+        "diameter_km": 116464,
+        "average_temperature_celsius": -178,
+        "gravity_m_s2": 10.44,
+        "composition": "Primarily hydrogen and helium, with a small rocky core",
+        "rotation_speed_kmh": 34800,
+        "rotation_relative_to_earth": "10 hours 42 minutes",
+        "rotation_axis_deg": 26.7,
+        "color_hex": "#ffd700",
+        "atmosphere_thickness": 8,
+        "description": "Famous for its stunning ring system, Saturn is a gas giant with captivating features.",
+        "interesting_facts": [
+            "Saturn's rings are made up of countless small particles of ice and rock.",
+            "It has a relatively low density and would float in water if a body of water large enough could be found."
+        ],
+        "satellites": 83,
+        "distance_light_years": 0.000017,
+        "age_years": "4.6e9",
+        "weight_kg": 5.683e26
+    }, {
+        "name": "uranus",
+        "textures": ["uranus.jpg"],
+        "diameter_km": 50724,
+        "average_temperature_celsius": -224,
+        "gravity_m_s2": 8.69,
+        "composition": "Primarily hydrogen and helium, with a water-ammonia ocean mantle",
+        "rotation_speed_kmh": 9000,
+        "rotation_relative_to_earth": "17 hours 14 minutes",
+        "rotation_axis_deg": 97.8,
+        "color_hex": "#98f5ff",
+        "atmosphere_thickness": 4,
+        "description": "Uranus is an ice giant lying on its side, with a unique rotation axis.",
+        "interesting_facts": [
+            "Uranus rotates on its side, with its poles facing the Sun in an almost perpendicular orientation.",
+            "It has a faint ring system and a blue-green hue due to the presence of methane in its atmosphere."
+        ],
+        "satellites": 27,
+        "distance_light_years": 0.00000272,
+        "age_years": "4.6e9",
+        "weight_kg": 8.681e25
+    }, {
+        "name": "neptune",
+        "textures": ["neptune.jpg"],
+        "diameter_km": 49244,
+        "average_temperature_celsius": -218,
+        "gravity_m_s2": 11.15,
+        "composition": "Primarily hydrogen and helium, with a water-ammonia ocean mantle",
+        "rotation_speed_kmh": 9600,
+        "rotation_relative_to_earth": "16 hours 6 minutes",
+        "rotation_axis_deg": 28.3,
+        "color_hex": "#4169e1",
+        "atmosphere_thickness": 6,
+        "description": "Neptune is the farthest known planet in our solar system, with vivid blue coloration.",
+        "interesting_facts": [
+            "Neptune has the fastest winds in the solar system, reaching speeds of up to 2,100 km/h.",
+            "Its blue color is a result of methane in its atmosphere absorbing red light."
+        ],
+        "satellites": 14,
+        "distance_light_years": 0.00000272,
+        "age_years": "4.5e9",
+        "weight_kg": 1.024e26
+    }, {
+        "name": "proxima centauri b",
+        "textures": [],
+        "diameter_km": 20125,
+        "average_temperature_celsius": -39,
+        "gravity_m_s2": 8.8,
+        "composition": "Rocky with potentially liquid water",
+        "rotation_speed_kmh": 8,
+        "rotation_relative_to_earth": "N/A",
+        "rotation_axis_deg": 0,
+        "color_hex": "#a0a0a0",
+        "atmosphere_thickness": 2,
+        "description": "An exoplanet located in the habitable zone of the red dwarf star Proxima Centauri.",
+        "interesting_facts": [
+            "Proxima Centauri b is the closest known exoplanet to Earth, but its potential habitability is still debated.",
+            "It orbits its star in the habitable zone, where conditions might allow for liquid water on the surface."
+        ],
+        "satellites": [],
+        "distance_light_years": 4.22,
+        "age_years": "N/A",
+        "weight_kg": "N/A"
+    }
+]

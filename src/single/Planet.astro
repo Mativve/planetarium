@@ -1,50 +1,142 @@
 ---
 import { format } from 'numerable';
+import Data from '../components/Data.astro';
 
-const { name, diameter_km, temperature, gravity_ms, composition, population, description, curiosity, rotation_speed_kmh, relative_rotation_axis, textures, color_avg, atmoshpere_thickness } = Astro.props.data;
-const deg_s = (Math.abs(rotation_speed_kmh) / 3.6) * (360 / diameter_km) * 7;
+// const { name, diameter_km, temperature, gravity_ms, composition, population, description, curiosity, rotation_speed_kmh, relative_rotation_axis, textures, color_avg, atmoshpere_thickness } = Astro.props.data;
+// const { name, textures, diameter_km, temperature, gravity_m_s2, composition, population, rotation_speed_kmh, rotation_axis_deg, color_hex, atmosphere_thickness, description, interesting_facts, number_of_satellites, distance_from_sun_km, orbital_period_days, age_years, mass_kg } = Astro.props.data;
+const { name, textures, diameter_km, average_temperature_celsius, gravity_m_s2, composition, rotation_speed_kmh, rotation_relative_to_earth, rotation_axis_deg, color_hex, atmosphere_thickness, description, interesting_facts, satellites, distance_light_years, age_years, weight_kg } = Astro.props.data;
+
+let layers = textures;
+
+if( !layers.length ){
+    layers = ["nid.jpg"];
+}
+
+const datas = [
+    {
+        "name": "diameter_km",
+        "title": "Diameter",
+        "value": diameter_km,
+        "iconClass": "ph ph-arrows-horizontal",
+        "content": `${format(diameter_km, '0,0.X')} km`,
+        "isLeft": true
+    },
+    {
+        "name": "average_temperature_celsius",
+        "title": "Avarage temperature",
+        "value": average_temperature_celsius,
+        "iconClass": "ph ph-thermometer-hot",
+        "content": `${format(average_temperature_celsius, '0.X')} &deg;C`,
+        "isLeft": false
+    },
+    {
+        "name": "gravity_m_s2",
+        "title": "Gravity",
+        "value": gravity_m_s2,
+        "iconClass": "ph ph-arrow-line-down",
+        "content": `${format(gravity_m_s2, '0.0')} m/s`,
+        "isLeft": true
+    },
+    {
+        "name": "rotation_speed_kmh",
+        "title": "Rotation speed",
+        "value": rotation_speed_kmh,
+        "iconClass": "ph ph-gauge",
+        "content": `${format(rotation_speed_kmh, '0.0')} km/h`,
+        "isLeft": false
+    },
+    {
+        "name": "rotation_axis_deg",
+        "title": "Rotation axis",
+        "value": rotation_axis_deg,
+        "iconClass": "ph ph-compass-tool",
+        "content": `${format(rotation_axis_deg, '0.0')} deg`,
+        "isLeft": true
+    },
+    {
+        "name": "distance_light_years",
+        "title": "Light years",
+        "value": distance_light_years,
+        "iconClass": "ph ph-line-segment",
+        "content": `${format(distance_light_years, '0,0.X')} ly`,
+        "isLeft": false
+    },
+    {
+        "name": "age_years",
+        "title": "Age",
+        "value": age_years,
+        "iconClass": "ph ph-clock-countdown",
+        "content": `${age_years} years`,
+        "isLeft": true
+    },
+    {
+        "name": "weight_kg",
+        "title": "Weight",
+        "value": weight_kg,
+        "iconClass": "ph ph-scales",
+        "content": `${weight_kg} kg`,
+        "isLeft": false
+    }
+]
+
+const deg_s = (Math.abs(rotation_speed_kmh) / 3.6) * (360 / diameter_km);
+
+const start_deg = 45, end_deg = -45;
+const sum_deg = Math.abs(start_deg) + Math.abs(end_deg);
+
+const left_items_count = datas.filter((data) => data.isLeft === true).length;
+let left_items_deg_step = (sum_deg + (sum_deg / left_items_count)) / left_items_count;
+
+const right_items_count = datas.filter((data) => data.isLeft === false).length;
+let right_items_deg_step = (sum_deg + (sum_deg / right_items_count)) / right_items_count;
+
+const start_deg_left = start_deg;
+const start_deg_right = start_deg;
+
+let index = 0;
 ---
-<article class="planet" style={ `--rotateaxis: ${relative_rotation_axis}deg; --rotatespeed: ${deg_s}s; --avgcolor: ${color_avg}03; --atmospherethick: ${1 + (atmoshpere_thickness / 200)}` }>
+<article id={ name } class="planet" style={ `--rotateaxis: ${rotation_axis_deg}deg; --counterrotateaxis: -${rotation_axis_deg.toFixed(2)}deg; --rotatespeed: ${deg_s.toFixed(2)}s; --rotatespeed2x: ${(deg_s - (deg_s * 0.90)).toFixed(2) }s; --avgcolor: ${color_hex}08; --atmospherethick: ${(1.1 + (atmosphere_thickness / 60)).toFixed(2)}; --atmospherethick2x: ${((1.1 + (atmosphere_thickness / 60)) * 1.5).toFixed(2)}` }>
     <div class="container">
         <div class="planet-inner">
-            <div class="planet-sphere" data-layers={ textures.length }>
+            <h2 class="planet-name">{ name }</h2>
+            <h2 class="planet-name-back">
+                <span class="planet-name-back-left">
+                    <div class="planet-name-back-part">{ name }</div>
+                </span>
+                <span class="planet-name-back-right">
+                    <div class="planet-name-back-part">{ name }</div>
+                </span>
+            </h2>
+
+            <div class="planet-sphere" data-layers={ layers.length }>
                 <div class="planet-sphere-inner">
-                    <div class="planet-textures" data-planet={ name }>
-                        { 
-                            textures.map((t, i) => {
-                                return <div class="planet-texture" data-layer={++i} alt={ name } style={ `--src: url(./assets/img/${t});` }></div>
+                    <div class="planet-textures">
+                        {
+                            layers.map((t, i) => {
+                                let no = i + 1;
+
+                                if( name == "earth" && i == 3 ){
+                                    return '';
+                                }
+
+                                return <div class="planet-texture-outer" data-layer={no}><div class="planet-texture" data-layer={no} style={ `--src: url(./assets/img/${t});` }></div></div>
                             })
                         }
+                        <div class="planet-texture-outer" data-layer="noise"><div class="planet-texture" data-layer="noise" style='--src: url("./assets/img/noise_2.png");'></div></div>
+                        <!-- <div class="planet-texture-outer" data-layer="noise-reverse"><div class="planet-texture" data-layer="noise-reverse" style='--src: url("./assets/img/noise_2.png");'></div></div> -->
+                        <!-- <div class="planet-texture-outer" data-layer="structure"><div class="planet-texture" data-layer="structure"></div></div> -->
                     </div>
                 </div>
             </div>
-            <div class="planet-info">
-                <h2 class="planet-name">{ name }</h2>
-                <ul class="planet-status">
-                    <li class="planet-diameter"><span class="icon"><i class="ph-light ph-arrows-horizontal"></i></span> <span>{ format(diameter_km, '0,0.X') } km</span></li>
-                    <li class="planet-gravity"><span class="icon"><i class="ph-light ph-arrow-line-down"></i></span> <span>{ format(gravity_ms, '0.0') } m/s<sup>2</sup></span></li>
-                    <li class="planet-population"><span class="icon"><i class="ph-light ph-users-three"></i></span> <span>{ format(population, '0.X a') }</span></li>
-                    <li class="planet-rotation-speed"><span class="icon"><i class="ph-light ph-gauge"></i></span> <span>{ format(rotation_speed_kmh, '0.0') } km/h</span></li>
-                    <li class="planet-rotation-axis"><span class="icon"><i class="ph-light ph-compass-tool"></i></span> <span>{ format(relative_rotation_axis, '0.0') } &deg;</span></li>
-                </ul>
-                <div class="planet-temperature">
-                    <div class="planet-scale">
-                        { 
-                            Object.keys(temperature).map(k => {
-                                return <span class={k}>{temperature[k]} &deg;C <span class="sub">({k})</span></span>
-                            })
-                        }
-                    </div>
-                </div>
-                <div class="planet-composition">
-                    {
-                        composition.map(c => {
-                            return <span>{ c }</span>;
-                        })
-                    }
-                </div>
-                <div class="planet-description">{ description }</div>
-                <div class="planet-curiosity">{ curiosity }</div>
+
+            <div class="planet-content">
+                {
+                    datas.map(({name, title, value, iconClass, content, isLeft}, i) => {
+                        let mod = i % 2;
+                        if( i > 1 && mod === 0 ){ index++; }
+                        return <Data data={ name } iconClass={ iconClass } title={ title } angle={ (start_deg_left - ( left_items_deg_step * index ) ) } side={ (isLeft) ? "left" : "right" } set:html={content}></Data>
+                    })
+                }
             </div>
         </div>
     </div>
@@ -52,95 +144,197 @@ const deg_s = (Math.abs(rotation_speed_kmh) / 3.6) * (360 / diameter_km) * 7;
 
 <style lang="scss">
     .planet{
+        --sphere_size: clamp(16vw, 18vw, 20vw);
+        $this: &;
+
+
         position: relative;
-        scroll-snap-align: start;
         
-        height: 100vh;
+        min-height: 100vh;
+        padding: 30em 0;
         overflow: hidden;
 
         display: flex;
-        align-items: center;
+        align-items: stretch;
         z-index: 2;
 
-        &::after{
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: linear-gradient(to bottom, var(--c_secondary-dark), transparent 40%, transparent 60%, var(--c_secondary-dark) 100%);
+        scroll-snap-align: center;
+
+        &-left{
+            flex: 1 1 37.5%;
         }
 
-        &::before{
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 70%;
-            padding-bottom: 70%;
-            border-radius: 50%;
-            transform: translate(-15%, -50%);
-            // filter: blur(25px);
-            background-color: var(--avgcolor);
+        &-right{
+            flex: 1 1 37.5%;
         }
 
+        // Planet inner
         &-inner{
             display: flex;
             align-items: center;
+            height: 100%;
         }
 
-        &-sphere{
-            position: relative;
-            width: 30%;
-            transform: translateX(-10%);
+        // Planet name
+        &-name{
+            position: absolute;
+            top: calc( 30% - 10vh );
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            letter-spacing: 5px;
+            text-shadow: 2px 2px 10px var(--avgcolor);
 
-            &::after, &::before{
-                content: '';
+            &-back{
+                $back: &;
+
                 position: absolute;
-                top: 0;
-                left: 0;
+                top: 50%;
+                left: 50%;
                 width: 100%;
-                height: 100%;
-                box-shadow:
-                    0 0 20px 20px var(--avgcolor), 0 0 40px 40px var(--avgcolor),
-                    inset 10px 0 20px rgba(255, 255, 255, 0.25), inset 50px 0 60px rgba(255, 255, 255, 0.125), inset 100px 0 110px rgba(255, 255, 255, 0.05), inset 100px 0 110px rgba(255, 255, 255, 0.05),
-                    inset -10px 0 20px rgba(0, 0, 0, 1), inset -50px 0 60px rgba(0, 0, 0, 0.25), inset -100px 0 110px rgba(0, 0, 0, 0.5), inset -100px 0 110px rgba(0, 0, 0, 0.5);
-                border-radius: 50%;
-                overflow: hidden;
-                z-index: 1;
+                transform: translate(-50%, -50%);
+                z-index: -1;
 
-                transform: scale(1.005);
-            }
+                font-size: 12vw;
+                color: var(--avgcolor);
+                opacity: 0.5;
 
-            &::after{
-                opacity: 0.25;
-            }
+                perspective: 1000px;
 
-            &::before{
-                mix-blend-mode: luminosity;
-            }
+                pointer-events: none;
 
-            &-inner{
-                position: relative;
-                padding-bottom: 100%;
-                transform: rotate(var(--rotateaxis, 0deg));
-
-                &::before{
-                    content: '';
+                &-left, &-right{
                     position: absolute;
                     top: 50%;
-                    left: 50%;
-                    height: 130%;
-                    width: 1px;
-                    transform: translate(-50%, -50%);
-                    z-index: -1;
-                    
-                    border-right: 2px dashed rgba(255, 255, 255, 0.5);
+                    transform: translate(0%, -50%);
+                    text-align: center;
+                    width: 100%;
+                    overflow: hidden;
+
+                    transition: transform 0.75s ease;
+                }
+
+                &-part{
+                    display: block;
+                    white-space: nowrap;
+
+                    opacity: 0;
+                    transition: opacity 1s ease-out;
+                }
+
+                &-left{
+                    left: 0;
+                    clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+                    transform: translate(-8%, -50%);
+
+                    #{$back}-part{
+                        transform-origin: center right;
+                    }
+                }
+
+                &-right{
+                    right: 0;
+                    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+                    transform: translate(8%, -50%);
+
+                    #{$back}-part{
+                        transform-origin: center left;
+                    }
                 }
             }
         }
 
+        // Planet sphere
+        &-sphere{
+            // opacity: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            // transform: translate(-50%, -50%) rotate(var(--rotateaxis, 0deg));
+            transform: translate(-50%, -50%);
+            width: var(--sphere_size);
+
+            border-radius: 50%;
+            z-index: -1;
+
+            // Glow outside shadow
+            box-shadow: 0 0 20px 20px var(--avgcolor), 0 0 40px 40px var(--avgcolor);
+
+            transition: transform 0.8s ease-out;
+            will-change: transform;
+            
+            &::before, &::after{
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            &::before{
+                width: 100.6%;
+                height: 100.6%;
+                z-index: 10;
+                
+                // transform: translate(-50%, -50%) rotate( var(--counterrotateaxis, 0deg) );
+                transform: translate(-50%, -50%);
+                
+                border-radius: 50%;
+                overflow: hidden;
+
+                // Sphere lightning
+                background: radial-gradient(circle at 25% 15%, var(--avgcolor) 0%, rgba(0,0,0,1) 85%);
+            }
+
+            &::after{
+                height: 180%;
+                width: 4px;
+                border: 2px dashed var(--c_white);
+                border-top-color: transparent;
+                border-bottom-color: transparent;
+                opacity: 0.1;
+
+                height: calc( var(--sphere_size) * 1.75 );
+                width: calc( var(--sphere_size) * 1.75 );
+                border-radius: 50%;
+
+                // transform: translate(-50%, -50%) rotate( var(--counterrotateaxis, 0deg) );
+                transform: translate(-50%, -50%);
+            }
+
+            // Planet sphere inner
+            &-inner{
+                position: relative;
+                padding-bottom: 100%;
+                border-radius: 50%;
+
+                &::before, &::after{
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    z-index: 9;
+
+                    mix-blend-mode: hard-light;
+
+                    transform: rotate(var(--rotateaxis, 0deg));
+                }
+
+                &::before{
+                    box-shadow: inset 25px 0 25px -10px rgba(255, 255, 255, 0.25);
+                }
+
+                &::after{
+                    box-shadow: inset -20px -20px 40px rgba(0,0,0,0.5);
+                }
+            }
+        }
+
+        // Planet textures group
         &-textures{
             position: absolute;
             top: 0;
@@ -148,172 +342,202 @@ const deg_s = (Math.abs(rotation_speed_kmh) / 3.6) * (360 / diameter_km) * 7;
             width: 100%;
             height: 100%;
 
-            &[data-planet="earth"]{
-                [data-layer="2"]{
-                    -webkit-mask-image: -webkit-gradient(
-                        linear, right top, left top, 
-                        color-stop(0.00,  rgba(0,0,0,1)),
-                        color-stop(0.30,  rgba(0,0,0,1)),
-                        color-stop(0.60,  rgba(0,0,0,0)),
-                        color-stop(0.9,  rgba(0,0,0,0)));
-                }
-            }
-        }
-
-        &-texture{
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: block;
-            z-index: 0;
-            transform: scale(1);
-
-            background-image: var(--src);
-            background-repeat: repeat;
-            background-size: auto 100%;
-            background-position: 0% 0;
-            will-change: background;
-
-            border-radius: 50%;
-            overflow: hidden;
-
-            // animation: rotate var(--rotatespeed, 5s) linear infinite forwards;
-
-            &[data-layer="2"]{
-                z-index: 1;
-                opacity: 1;
-            }
-        }
-
-
-        &-info{
-            width: 70%;
-            position: relative;
-            z-index: 1;
-            padding-left: 64px;
-
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            grid-template-rows: 1fr;
-            grid-template-areas:
-            "name"
-            "status"
-            "temperature"
-            "composition"
-            "description"
-            "curiosity";
-            gap: 16px;
-        }
-
-        &-name{
-            grid-area: name;
-        }
-
-        &-status{
-            grid-area: status;
-
-            list-style: none;
-
-            display: flex;
-            align-items: center;
-            margin-bottom: 24px;
-
-            li{
-                flex: 1;
-            }
-        }
-
-        &-diameter{
-
-        }
-
-        &-gravity{
-
-        }
-
-        &-population{
-
-        }
-
-        &-rotation-speed{
-
-        }
-
-        &-rotation-axis{
-
-        }
-
-
-        &-temperature{
-            grid-area: temperature;
-
-            position: relative;
-
-            width: 100%;
-            height: 64px;
-            
-            &::before{
+            &::before, &::after{
                 content: '';
                 position: absolute;
                 top: 0;
                 left: 0;
                 width: 100%;
-                height: 8px;
-                background-image: linear-gradient(to right, #01334d, #0b4764, #357ca0, #119abc, #5dbed0, #7bd0e0, #c1e6e5, #e6e1dd, #e3a0a2, #e18474, #df5646, #cc1c22, #b0161b, #8b041a, #590102);
-                border-radius: 64px;
+                height: 100%;
+                border-radius: 50%;
+                overflow: hidden;
+                z-index: 1;
+
+                mix-blend-mode: hard-light;
+
+                transform: rotate( var(--counterrotateaxis, 0deg) );
             }
 
-            .min, .avg, .max{
+            &::before{
+                box-shadow: inset 30px 0 30px -20px rgba(255, 255, 255, 0.5);
+            }
+
+            &::after{
+                box-shadow: inset -20px -20px 40px rgba(0,0,0,0.5);
+            }
+        }
+
+        // Planet single texture
+        &-texture{
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: block;
+            z-index: 0;
+
+            background-image: var(--src);
+            background-repeat: repeat;
+            background-size: auto 100%;
+            background-position: 0% 0%;
+
+            border-radius: 50%;
+
+            animation: rotate 20s linear infinite forwards;
+            animation-play-state: paused;
+
+            &[data-layer="noise"]{
+                mix-blend-mode: lighten;
+                opacity: 0.45;
+                z-index: 5;
+                background-size: 75%;
+                animation-duration: var(--rotatespeed2x);
+
+                transform: scale( calc(var(--atmospherethick) * -1), calc(var(--atmospherethick) * -1) );
+                // box-shadow: inset 30px 0 30px -20px rgba(255, 255, 255, 0.25), inset -20px -20px 60px 20px rgba(0,0,0,0.25);
+                z-index: -1;
+
+                display: none;
+            }
+
+            // Planet texture outer
+            &-outer{
                 position: absolute;
                 top: 0;
                 left: 0;
-                transform: translate(-50%, 35%);
-                text-align: center;
+                width: 100%;
+                height: 100%;
+                display: block;
+                z-index: 0;
+                transform: scale(1);
+                border-radius: 50%;
 
-                .sub{
-                    display: block;
-                    font-size: var(--step--1);
-                    opacity: 0.5;
-                }
+                &[data-layer="1"]{ z-index: 3; overflow: hidden; }
+                &[data-layer="2"]{ z-index: 4; overflow: hidden; }
+                &[data-layer="3"]{ z-index: 5; overflow: hidden; }
+                &[data-layer="4"]{ z-index: 6; overflow: hidden; }
+                &[data-layer="noise-reverse"]{ transform: scale(1.5); overflow: hidden; box-shadow: inset 0 0 20px 20px var(--c_secondary-dark); }
+            }
+        }
+
+        // Planet content
+        &-content{
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            height: 100%;
+        }
+
+        // Planet data box
+        &-temperature{
+            grid-area: temperature;
+            position: relative;
+
+            width: 100%;
+
+            &-scale{
+                position: relative;
+
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
 
                 &::before{
                     content: '';
-                    position: absolute;
-                    top: 0;
-                    left: 50%;
-                    transform: translate(-50%, -110%);
-                    width: 2px;
-                    height: 24px;
-                    background-color: var(--c_white);
-                    z-index: 1;
+                    grid-column: 1 / 4;
+                    display: block;
+                    width: 100%;
+                    height: 8px;
+                    background-image: linear-gradient(to right, #01334d, #0b4764, #357ca0, #119abc, #5dbed0, #7bd0e0, #c1e6e5, #e6e1dd, #e3a0a2, #e18474, #df5646, #cc1c22, #b0161b, #8b041a, #590102);
+                    border-radius: 64px;
+                }
+
+                .min, .avg, .max{
+                    position: relative;
+                    text-align: center;
+                    margin-top: 12px;
+
+                    .sub{
+                        display: block;
+                        font-size: var(--step--1);
+                        opacity: 0.5;
+                    }
+
+                    &::before{
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 50%;
+                        transform: translate(-50%, -110%);
+                        width: 2px;
+                        height: 24px;
+                        background-color: var(--c_white);
+                        z-index: 1;
+                    }
+                }
+
+                .min{
+                    grid-column: 1 / 2;
+                }
+
+                .avg{
+                    grid-column: 2 / 3;
+                }
+
+                .max{
+                    grid-column: 3 / 4;
+                }
+            }
+        }
+
+
+        // 
+        // Different styles for planets
+        // 
+        &[id="sun"]{
+            #{$this}-sphere{
+                &::before{
+                    background-image: none;
+                    box-shadow: inset 0 0 30px 20px var(--avgcolor), 0 0 30px 20px var(--avgcolor), 0 0 40px 30px var(--avgcolor), 0 0 50px 40px var(--avgcolor), 0 0 60px 40px var(--avgcolor), 0 0 70px 60px var(--avgcolor);
+                }
+
+                &-inner{
+                    &::before, &::after{
+                        display: none;
+                    }
                 }
             }
 
-            .min{
-                left: 15%;
+            #{$this}-textures{
+                &::before, &::after{
+                    display: none;
+                }
             }
 
-            .avg{
-                left: 50%;
-            }
+            #{$this}-texture{
+                &[data-layer="1"]{
+                }
 
-            .max{
-                left: 85%;
+                &[data-layer="structure"]{
+                    // background-image: radial-gradient(circle, #FFD700 20%, #FFA500 50%, #FF4500 80%);
+                }
             }
         }
 
-        &-composition{
-            grid-area: composition;
-        }
+        &[id="earth"]{
+            #{$this}-texture{
+                &[data-layer="2"]{
+                    -webkit-mask-image: -webkit-gradient(
+                        linear, left top, right top, 
+                        color-stop(0.00,  rgba(0,0,0,0)),
+                        color-stop(0.50,  rgba(0,0,0,0)),
+                        color-stop(0.70,  rgba(0,0,0,0.65)),
+                        color-stop(1,  rgba(0,0,0,1))
+                    );
+                }
 
-        &-description{
-            grid-area: description;
-        }
-
-        &-curiosity{
-            grid-area: curiosity;
+                &[data-layer="3"]{
+                    display: none;
+                }
+            }
         }
     }
 
@@ -323,6 +547,65 @@ const deg_s = (Math.abs(rotation_speed_kmh) / 3.6) * (360 / diameter_km) * 7;
         }
         100%{
             background-position: 200% 0%;
+        }
+    }
+
+    @keyframes zoom{
+        0%{
+            transform: scale(var(--atmospherethick));
+        }
+        100%{
+            transform: scale(var(--atmospherethick2x));
+        }
+    }
+</style>
+
+<style lang="scss" is:global>
+    .planet{
+        $this: &;
+        
+        &.show{
+            #{$this}{
+                &-texture{
+                    animation-play-state: running;
+                }
+
+                &-name{
+                    &-back{
+                        &-part{
+                            opacity: 1;
+                        }
+                    }
+                }
+
+                &-data{
+                    opacity: 1;
+
+                    &-wrapper{
+                        transform: translate(-50%, -50%) rotate( var(--deg, 0%) );
+
+                        &-left{
+                            #{$this}-data{
+                                transform: translateX(calc(-100% + var(--step-1))) rotate( var(--deg_inv, 0%) );
+
+                                &-content{
+                                    transform: scale(1);
+                                }
+                            }
+                        }
+
+                        &-right{
+                            #{$this}-data{
+                                transform: translateX(calc(100% - var(--step-1))) rotate( var(--deg_inv, 0%) );
+
+                                &-content{
+                                    transform: scale(1);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 </style>
