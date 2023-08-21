@@ -119,10 +119,10 @@ let index = 0;
                                     return '';
                                 }
 
-                                return <div class="planet-texture-outer" data-layer={no}><div class="planet-texture" data-layer={no} style={ `--src: url(./assets/img/${t});` }></div></div>
+                                return <div class="planet-texture-outer" data-layer={no}><div class="planet-texture" data-layer={no} style={ `--src: url("../assets/img/${t}");` }></div></div>
                             })
                         }
-                        <div class="planet-texture-outer" data-layer="noise"><div class="planet-texture" data-layer="noise" style='--src: url("./assets/img/noise_2.png");'></div></div>
+                        <div class="planet-texture-outer" data-layer="noise"><div class="planet-texture" data-layer="noise" style='--src: url("../assets/img/noise_2.png");'></div></div>
                         <!-- <div class="planet-texture-outer" data-layer="noise-reverse"><div class="planet-texture" data-layer="noise-reverse" style='--src: url("./assets/img/noise_2.png");'></div></div> -->
                         <!-- <div class="planet-texture-outer" data-layer="structure"><div class="planet-texture" data-layer="structure"></div></div> -->
                     </div>
@@ -134,7 +134,7 @@ let index = 0;
                     datas.map(({name, title, value, iconClass, content, isLeft}, i) => {
                         let mod = i % 2;
                         if( i > 1 && mod === 0 ){ index++; }
-                        return <Data data={ name } iconClass={ iconClass } title={ title } angle={ (start_deg_left - ( left_items_deg_step * index ) ) } side={ (isLeft) ? "left" : "right" } set:html={content}></Data>
+                        return <Data index={ index } maxItems={ (isLeft) ? left_items_count : right_items_count } data={ name } iconClass={ iconClass } title={ title } angle={ (start_deg_left - ( left_items_deg_step * index ) ) } side={ (isLeft) ? "left" : "right" } set:html={content}></Data>
                     })
                 }
             </div>
@@ -330,6 +330,15 @@ let index = 0;
 
                 &::after{
                     box-shadow: inset -20px -20px 40px rgba(0,0,0,0.5);
+                }
+            }
+
+            @media screen and (max-width: 920px){
+                --sphere_size: 30vw;
+                top: 40%;
+
+                &:after{
+                    display: none;
                 }
             }
         }
@@ -539,6 +548,53 @@ let index = 0;
                 }
             }
         }
+
+        @media screen and (max-width: 920px){
+            padding: 10em 0;
+
+            &-inner{
+                display: flex;
+                flex-direction: column;
+            }
+
+            &-name{
+                position: relative;
+                top: unset;
+                left: unset;
+                transform: unset;
+                width: 100%;
+                text-align: right;
+
+                &-back{
+                    display: none;
+                }
+            }
+
+            &-sphere{
+                top: 30%;
+                left: 0;
+                width: 100%;
+            }
+
+            &-content{
+                height: unset;
+
+                margin-top: auto;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto;
+                gap: 24px;
+            }
+        }
+
+        @media screen and (max-width: 320px){
+            padding: 10em 0 0 0;
+
+            &-content{
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+        }
     }
 
     @keyframes rotate{
@@ -591,6 +647,10 @@ let index = 0;
                                 &-content{
                                     transform: scale(1);
                                 }
+
+                                @media screen and (max-width: 920px){
+                                    transform: unset;
+                                }
                             }
                         }
 
@@ -600,6 +660,10 @@ let index = 0;
 
                                 &-content{
                                     transform: scale(1);
+                                }
+
+                                @media screen and (max-width: 920px){
+                                    transform: unset;
                                 }
                             }
                         }

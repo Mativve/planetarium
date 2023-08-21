@@ -1,5 +1,5 @@
 ---
-const { data, iconClass, title, side, angle } = Astro.props;
+const { index, maxItems, data, iconClass, title, side, angle } = Astro.props;
 let cls = ["planet-data", data].join(" planet-");
 
 let angle_deg = angle;
@@ -9,9 +9,12 @@ if( angle_deg !== 0 && side === "right" ){
 }
 
 if( !isNaN(angle_deg) ){ angle_deg = angle_deg.toFixed(); }
+
+let pos_top_step = 100 / (maxItems-1);
+let pos_top = pos_top_step * index;
 ---
 
-<div class={ `planet-data-wrapper planet-data-wrapper-${data} planet-data-wrapper-${side}` } style={ `--deg: ${ angle_deg }deg; --deg_inv: ${ (angle_deg * -1) }deg` }>
+<div class={ `planet-data-wrapper planet-data-wrapper-${data} planet-data-wrapper-${side}` } style={ `--deg: ${ angle_deg }deg; --deg_inv: ${ (angle_deg * -1) }deg; --mob_pos_top: ${ pos_top }%` }>
     <div class={ cls }>
         <div class="planet-data-icon">
             <i class={ iconClass }></i>
@@ -56,19 +59,6 @@ if( !isNaN(angle_deg) ){ angle_deg = angle_deg.toFixed(); }
                 will-change: transform;
 
                 display: flex;
-
-                // &::after{
-                //     content: '';
-                //     position: absolute;
-                //     top: 50%;
-                //     left: 0;
-                //     width: 100%;
-                //     height: 0;
-                //     // background-color: var(--c_white);
-                //     border-top: 2px dashed var(--c_white);
-                //     opacity: 0.1;
-                //     z-index: -1;
-                // }
 
                 &-left{
                     justify-content: flex-start;
@@ -146,7 +136,7 @@ if( !isNaN(angle_deg) ){ angle_deg = angle_deg.toFixed(); }
                     transition-delay: 0.45s;
                 }
 
-                &:nth-child(5), &:nth-child(6), &:nth-last-child(5), &:nth-last-child(6){
+                &:nth-child(7), &:nth-child(8), &:nth-last-child(7), &:nth-last-child(8){
                     transition-delay: 0.55s;
                 }
             }
@@ -189,6 +179,50 @@ if( !isNaN(angle_deg) ){ angle_deg = angle_deg.toFixed(); }
             .value{
                 font-size: var(--step-0);
                 line-height: 1;
+            }
+
+            @media screen and (max-width: 920px){
+                width: 100%;
+
+                &-wrapper{
+                    --deg: 0deg !important;
+                    --deg_inv: 0deg !important;
+
+                    position: relative;
+                    top: unset;
+                    width: 100%;
+
+                    &-left{
+                        #{$this}-data{
+                            &-content{
+                                padding: 0 16px 0 0;
+                            }
+                        }
+                    }
+                    
+                    &-right{
+                        #{$this}-data{
+                            &-content{
+                                padding: 0 0 0 16px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            @media screen and (max-width: 320px){
+                &-wrapper{
+                    &-left{
+                        #{$this}-data{
+                            flex-direction: row;
+
+                            &-content{
+                                text-align: left;
+                                padding: 0 0 0 16px;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

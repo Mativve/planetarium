@@ -7,7 +7,7 @@
         <h1 class="h2 welcome-hero-title" data-title="planetarium">planetarium</h1>
     </div>
     
-    <button class="welcome-hero-more"><span>discover the cosmos</span></button>
+    <a href="#planets" class="welcome-hero-more"><span>discover the cosmos</span></a>
 </header>
 
 <style lang="scss">
@@ -72,6 +72,10 @@
             font-size: var(--step--1);
             color: var(--c_white);
             z-index: 3;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             span{
                 position: relative;
